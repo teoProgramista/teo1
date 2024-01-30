@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Invitation</title>
+    <style>
+        body {
+            background-color: pink;
+            font-family: 'cursive'; /* Use a cool handwriting font */
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        #buttonContainer {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        #resultText {
+            margin-top: 20px;
+            font-size: 32px;
+            font-weight: normal; /* Set normal weight initially */
+        }
+
+        #resultText.bold {
+            font-size: 32px; /* Larger font size for bold text */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <img id="valentineImage" src="images/kotka.jpg" alt="Valentine's Day Image">
+    <h1>Хайй бейби<br>Ще ми бъдеш ли валентинка?</h1>
+    <div id="buttonContainer">
+        <button onclick="showResult('yes')" id="yesButton">Да</button>
+        <button onclick="moveButtons()" id="noButton">Не</button>
+    </div>
+    <div id="resultText"></div>
+
+    <script>
+        var noButtonClickCount = 0;
+
+        function showResult(answer) {
+            var valentineImage = document.getElementById('valentineImage');
+            var resultText = document.getElementById('resultText');
+            if (answer === 'yes') {
+                valentineImage.src = "images/svatba.jpg";
+                
+                // Display a message dynamically instead of redirecting to a separate file
+                resultText.innerText = "ЙЕЙЙЙЙ, чакам те на 14 февруари май лоувв";
+                // Remove the buttons
+                document.getElementById('buttonContainer').style.display = 'none';
+                // Hide the main text
+                document.querySelector('h1').style.display = 'none';
+                // Make the result text bigger and bold
+                resultText.className = 'bold';
+            } else {
+                // Change the image source for 'No' button
+                valentineImage.src = "images/pistolet.jpg";
+                moveButtons();
+            }
+        }
+
+        function moveButtons() {
+            var button = document.getElementById('noButton');
+            var container = document.getElementById('buttonContainer');
+
+            var maxX = container.clientWidth - button.clientWidth;
+            var maxY = container.clientHeight - button.clientHeight;
+
+            var newX = Math.floor(Math.random() * maxX);
+            var newY = Math.floor(Math.random() * maxY);
+
+            button.style.position = 'absolute';
+            button.style.left = newX + 'px';
+            button.style.top = newY + 'px';
+
+            document.getElementById('resultText').innerText = "Като цяло 'не' е само за украса ;)";
+            noButtonClickCount++;
+
+            // Check if the user clicked 'No' twice
+            if (noButtonClickCount >= 2) {
+                // Change the location on every subsequent click
+                noButtonClickCount = 0;
+            }
+        }
+    </script>
+</body>
+</html>
